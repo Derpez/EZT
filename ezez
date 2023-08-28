@@ -1,0 +1,42 @@
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+
+local targetColor = Color3.new(255, 219, 172)  -- Change this to your desired color
+local colorTolerance = 0.2               -- Adjust this tolerance as needed
+
+local lockedAim = false
+
+local player = Players.LocalPlayer
+local mouse = player:GetMouse()
+
+local function colorsSimilar(color1, color2, tolerance)
+    local deltaR = math.abs(color1.r - color2.r)
+    local deltaG = math.abs(color1.g - color2.g)
+    local deltaB = math.abs(color1.b - color2.b)
+    return deltaR <= tolerance and deltaG <= tolerance and deltaB <= tolerance
+end
+
+UserInputService.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement and lockedAim then
+        local targetPosition = Vector2.new(mouse.X, mouse.Y)
+
+        -- You would need to implement the logic to find the target color
+        -- and move the aim accordingly here. This might involve adjusting
+        -- the camera's CFrame or other relevant gameplay mechanics.
+    end
+end)
+
+local gui = Instance.new("ScreenGui")
+gui.Parent = game.Players.LocalPlayer.PlayerGui
+
+local toggleButton = Instance.new("TextButton")
+toggleButton.Text = "Toggle Locked Aim"
+toggleButton.Size = UDim2.new(0, 150, 0, 50)
+toggleButton.Position = UDim2.new(0.5, -75, 0.9, 0)
+toggleButton.Parent = gui
+
+toggleButton.MouseButton1Click:Connect(function()
+    lockedAim = not lockedAim
+    toggleButton.Text = lockedAim and "Locked Aim On" or "Locked Aim Off"
+end)
