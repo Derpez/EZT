@@ -1,9 +1,8 @@
 local UserInputService = game:GetService("UserInputService")
-local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 
-local targetColor = Color3.new(255, 219, 172)  -- Change this to your desired color
-local colorTolerance = 0.2               -- Adjust this tolerance as needed
+local targetColor = Color3.fromRGB(255, 219, 172)  -- White skin tone color
+local colorTolerance = 0.2
 
 local lockedAim = false
 
@@ -17,18 +16,8 @@ local function colorsSimilar(color1, color2, tolerance)
     return deltaR <= tolerance and deltaG <= tolerance and deltaB <= tolerance
 end
 
-UserInputService.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement and lockedAim then
-        local targetPosition = Vector2.new(mouse.X, mouse.Y)
-
-        -- You would need to implement the logic to find the target color
-        -- and move the aim accordingly here. This might involve adjusting
-        -- the camera's CFrame or other relevant gameplay mechanics.
-    end
-end)
-
 local gui = Instance.new("ScreenGui")
-gui.Parent = game.Players.LocalPlayer.PlayerGui
+gui.Parent = game.CoreGui
 
 local toggleButton = Instance.new("TextButton")
 toggleButton.Text = "Toggle Locked Aim"
